@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    /*padding: 20px;*/
+}
+
+.container a {
+    text-align: center; /* Center the text horizontally */
+    line-height: 5vh; /* Center the text vertically */
+}
+
+
+.mainTitle {
+    font-size: 50px;
+    font-family: "Courier New", monospace;
+    font-weight: 500;
+    text-align: center;
+    color: #333;
+}
+
+.secondTitle {
+    font-size: 15px;
+    font-family: "Courier New", monospace;
+    font-weight: 100;
+    text-align: center;
+    color: #333;
+}
+
+.projectButton {
+    margin: 10px; /* Add margin for spacing between buttons */
+    cursor: pointer;
+    width: auto; /* Let the width adjust to the content */
+    height: auto; /* Let the height adjust to the content */
+
+    font-size: 20px;
+    font-family: "Courier New", monospace;
+    white-space: nowrap; /* Prevent text from wrapping */
+
+    padding: 10px 20px;
+    background-color: none;  
+    color: rgb(0, 0, 0); /* Set text color to contrast with the background */
+    border: none; /* Remove button border */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}

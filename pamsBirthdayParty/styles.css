@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    /*padding: 20px;*/
+}
+ 
+ 
+/* Style for the button container */
+#buttonContainer {
+    text-align: center;
+    /*position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);*/
+  }
+ 
+#buttonContainer button {
+    font-size: 25px;
+    font-family: "Helvetica", monospace;
+    padding: 10px 20px;
+    background-color: #34db7a; /* Replace with your desired color */
+    color: rgb(0, 0, 0); /* Set text color to contrast with the background */
+    border: none; /* Remove button border */
+    border-radius: 2px; /* Optional: Add rounded corners */
+    font-weight: 100;
+  }
+ 
+h1 {
+    font-family: "Helvetica", sans-serif; /* Replace "Your Font Name" with the actual font you want to use */
+    font-size: 36px; /* 36px; Adjust the font size as needed */
+    font-weight: bold; /* You can specify 'normal' or 'bold' or other values */
+    font-style: italic; /* You can specify 'normal', 'italic', or 'oblique' */
+    text-align: center;
+}
+ 
+p {
+    font-family: Helvetica, sans-serif; /* Specify a fallback font if the preferred font is not available */
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+}
+
+.image-container {
+  width: 100%; /* Full width */
+  height: 35vh; /* 40% of the viewport height */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin: 5vw;
+}
+.img {
+    width: auto;
+    height: 100%;
+    display: none;
+    
+    /*display: none;
+    margin: 10vw;*/
+}
+
+#home-button {
+  font-size: 20px;
+  font-family: "Courier New", monospace;
+  padding: 10px 20px;
+  background-color: #db344a; /* Replace with your desired color */
+  color: rgb(0, 0, 0); /* Set text color to contrast with the background */
+  border: none; /* Remove button border */
+  border-radius: 5px; /* Optional: Add rounded corners */
+}
