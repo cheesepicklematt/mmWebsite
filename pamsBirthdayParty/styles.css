@@ -61,13 +61,3 @@ p {
     /*display: none;
     margin: 10vw;*/
 }
-
-#home-button {
-  font-size: 20px;
-  font-family: "Courier New", monospace;
-  padding: 10px 20px;
-  background-color: #db344a; /* Replace with your desired color */
-  color: rgb(0, 0, 0); /* Set text color to contrast with the background */
-  border: none; /* Remove button border */
-  border-radius: 5px; /* Optional: Add rounded corners */
-}
