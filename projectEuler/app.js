@@ -37,13 +37,14 @@ const completedQ = [
 const buttonLabels = []
 const gitUrlT = 'https://github.com/cheesepicklematt/project_euler_solutions/blob/main/q00'
 for (const str of completedQ) {
-    tmpQ = 'Q'+str
+    tmpQ = 'Question: '+str
     tmpUrl = str.length == 2 ? gitUrlT.slice(0, -1)+str+'/q'+str+'.py' : gitUrlT+str+'/q'+str+'.py';
+    tmpEuler = 'https://projecteuler.net/problem='+str
     tmp = {
         'rowName':'<b>'+tmpQ+'</b>',
-        'rowVal':'solution: '+tmpQ+'.py',
+        'rowVal':'solution: q'+str+'.py',
         'url':tmpUrl,
-        'urlH':editUrl(tmpUrl)
+        'eulerURL':tmpEuler
     }
     buttonLabels.push(tmp)
   }
@@ -66,7 +67,7 @@ buttonLabels.forEach(label => {
     });
     
     quesButton_n.addEventListener('click', () => {
-        window.open(editUrl(label.url), '_blank');
+        window.open(label.eulerURL, '_blank');
     });
     
 
