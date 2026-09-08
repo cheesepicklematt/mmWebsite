@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matthew Milne, quantitative developer</title>
+<meta name="description" content="Matthew Milne, quantitative developer. Automated trading systems, market data infrastructure and execution, built and operated end to end. Sydney, Australia.">
+<link rel="icon" href="https://i.pinimg.com/736x/bb/93/7d/bb937d07baf2901499ba0c0816134756.jpg">
+<link rel="stylesheet" href="resume.css">
+</head>
+<body>
+
+<header class="pageHead">
+  <div class="wrap">
+    <a class="backLink" href="../index.html">&larr; mattmilne.xyz</a>
+    <h1 class="name">Matthew Milne</h1>
+    <p class="role">
+      Quantitative developer. I build and operate automated trading systems end to end, from
+      market data capture through research, execution and pre-trade risk.
+    </p>
+    <ul class="contact">
+      <li>Sydney, Australia</li>
+      <li><a href="mailto:matt_milne@outlook.com">matt_milne@outlook.com</a></li>
+      <li><a href="tel:+61490815561">0490 815 561</a></li>
+      <li><a href="https://www.sydneyquant.com/">sydneyquant.com</a></li>
+    </ul>
+    <a class="pdfLink" href="MATTHEW%20MILNE%202026.pdf">Download PDF version &darr;</a>
+  </div>
+</header>
+
+<nav class="pageNav" id="pageNav" aria-label="Sections">
+  <div class="wrap">
+    <ul>
+      <li><a href="#profile">Profile</a></li>
+      <li><a href="#work">Selected work</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════ profile ═══════════════════════════════ -->
+<section class="section wrap" id="profile">
+  <h2>Profile</h2>
+  <div class="sectionBody">
+    <p class="lede">
+      Since 2024 I have run <strong>Sydney Quant Pty Ltd</strong>, a private trading and software
+      business, where I built and now operate a profitable <strong>cryptocurrency trading
+      system</strong>. It runs on real-time market data over WebSockets, medium-frequency
+      strategies, automated order management and execution, position reconciliation and hard
+      pre-trade risk limits. I own every layer of it: the research, the engine, the infrastructure and the
+      operations.
+    </p>
+    <p class="lede">
+      That sits on top of six years of quantitative and data engineering work in financial services:
+      backend Python for investment operations at Mercer, and production analytics and data
+      modelling at Westpac, currently as a senior data analyst on Online Share Trading.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ selected work ═════════════════════════ -->
+<section class="section wrap" id="work">
+  <h2>Selected work</h2>
+  <div class="sectionBody">
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Execution Stack<span class="org">, Sydney Quant</span></h3>
+        <span class="when">2024 &ndash; present</span>
+      </div>
+      <p class="tagline">
+        The private crypto trading system the business runs on. It trades unattended and is profitable.
+      </p>
+      <ul>
+        <li>Continuous market data capture over exchange WebSockets and REST APIs, stored raw and
+          append-only so any past decision can be re-examined against exactly what the system saw.</li>
+        <li>Medium-frequency strategies developed and backtested across mean reversion, market
+          making, Bayesian parameter optimisation and portfolio selection.</li>
+        <li>One code path for backtest and live: the backtester is the live engine fed historical
+          data through the same interface, with costs, latency and slippage modelled rather than
+          assumed away.</li>
+        <li>Idempotent order submission and an explicit order state machine, so a retry after a
+          timeout can never become a second position. Rejects and partials are handled as normal
+          cases, not exceptions.</li>
+        <li>Pre-trade limits on position, exposure, order rate and drawdown, checked before
+          submission. Reconciliation against the venue on every start, reconnect and interval.</li>
+        <li>Kill switch that fails closed on stale data or disconnection, and deterministic replay
+          of any session from the log.</li>
+      </ul>
+      <ul class="tags">
+        <li>Python</li><li>Async IO</li><li>WebSockets</li><li>PostgreSQL</li>
+        <li>Time-series</li><li>AWS</li>
+      </ul>
+    </article>
+
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Footylab<span class="org">, pricing and edge detection</span></h3>
+        <span class="when">2025 &ndash; present</span>
+      </div>
+      <p class="tagline">
+        Market-making thinking applied to sports betting markets: build an independent fair price,
+        de-vig the offered market, and trade the gap.
+      </p>
+      <ul>
+        <li>Independent probability estimate from historical form and matchup data, compared against
+          the bookmaker&rsquo;s true implied probability once the overround is stripped out.</li>
+        <li>Edge measured in percentage points against explicit, versioned thresholds. The
+          rules live in configuration and are applied uniformly, not adjusted per market.</li>
+        <li>Scheduled collection of fixtures, form and market prices into MySQL, with the full
+          working attached to every verdict.</li>
+      </ul>
+      <ul class="tags">
+        <li>Python</li><li>FastAPI</li><li>MySQL</li><li>Scheduled pipelines</li><li>Next.js</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Portfolio Lab<span class="org">, look-through exposure</span></h3>
+        <span class="when">2025 &ndash; present</span>
+      </div>
+      <p class="tagline">
+        Resolves a portfolio of ETFs to the single-name exposure actually held underneath.
+      </p>
+      <ul>
+        <li>Parses published issuer holdings disclosures from BetaShares and iShares and nets them
+          into one look-through position, surfacing concentration and overlap that the fund labels
+          hide.</li>
+        <li>Pairwise overlap and top-10 concentration metrics, with disclosure coverage reported
+          rather than assumed, so you can see what the
+          portfolio is genuinely exposed to rather than what the fund labels imply.</li>
+      </ul>
+      <ul class="tags">
+        <li>Python</li><li>Holdings parsers</li><li>Flutter</li>
+      </ul>
+    </article>
+
+    <p class="note">
+      Also shipped: <strong>Sum Hero</strong> and <strong>Aussie Tax Calculator</strong>, both live
+      on the App Store, with model, backend, client and store listing built in-house. Full
+      catalogue at <a href="https://www.sydneyquant.com/">sydneyquant.com</a>.
+    </p>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════ experience ════════════════════════════ -->
+<section class="section wrap" id="experience">
+  <h2>Experience</h2>
+  <div class="sectionBody">
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Founder &amp; Lead Developer<span class="org">, Sydney Quant Pty Ltd</span></h3>
+        <span class="when">2024 &ndash; present</span>
+      </div>
+      <ul>
+        <li>Founded and operate a quantitative development business spanning trading systems,
+          market analytics and consumer software.</li>
+        <li>Built and run a profitable cryptocurrency trading operation: real-time data, strategy
+          research, automated execution, risk limits and reconciliation, all self-hosted.</li>
+        <li>Designed and deployed the backend infrastructure behind it: Python services,
+          exchange APIs, MySQL and PostgreSQL, scheduled jobs, AWS deployment and alerting.</li>
+        <li>Shipped and support two products on the App Store, and built Footylab and Portfolio Lab
+          alongside the trading work.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Senior Data Analyst<span class="org">, Westpac Group</span></h3>
+        <span class="when">Jul 2025 &ndash; present</span>
+      </div>
+      <ul>
+        <li>Lead developer for the core analytical datasets behind Online Share Trading and Project
+          Eagle.</li>
+        <li>Built and maintain an automated data model that consolidates multiple Westpac systems
+          and databases into reliable production datasets.</li>
+        <li>Coordinate the team&rsquo;s daily analytical and data processes, with the data quality
+          checks and validation that keep them trustworthy.</li>
+        <li>Key technical resource for dataset design, issue resolution and automation.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Quantitative Analyst<span class="org">, Mercer Investments</span></h3>
+        <span class="when">Sep 2023 &ndash; Feb 2024</span>
+      </div>
+      <ul>
+        <li>Backend Python developer on a team building internal tooling for investment operations.</li>
+        <li>Built the backend of a Python application driven from an Excel front end used daily by
+          consultants and analysts.</li>
+        <li>Designed the data processing pipelines and business logic modules underneath it, tuned
+          for fast interactive response.</li>
+        <li>Automated complex investment workflows, improving reliability and turnaround.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Data Scientist<span class="org">, Westpac Advanced Analytics</span></h3>
+        <span class="when">Sep 2021 &ndash; Sep 2023</span>
+      </div>
+      <ul>
+        <li>Built automated pipelines delivering web-form and phone leads to bankers in near real
+          time.</li>
+        <li>Developed backend processes in Python and SQL, with a PowerApps front end over them for
+          business users.</li>
+        <li>Contributed to a customer lifetime value dataset built on large-scale cloud data
+          transformations.</li>
+      </ul>
+    </article>
+
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Analyst / Senior Analyst<span class="org">, Westpac Analytics &amp; Insights</span></h3>
+        <span class="when">Jan 2020 &ndash; Sep 2021</span>
+      </div>
+      <ul>
+        <li>Delivered analytics across data extraction, validation, reporting and stakeholder
+          insight.</li>
+        <li>Automated recurring ETL and reporting workflows in Python and SQL, and built reusable
+          utilities that cut manual analysis across the team.</li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════ skills ════════════════════════════════ -->
+<section class="section wrap" id="skills">
+  <h2>Skills</h2>
+  <div class="sectionBody">
+    <dl class="skills">
+      <div>
+        <dt>Trading systems</dt>
+        <dd>Real-time market data (WebSockets, exchange APIs), order management and automated
+          execution, backtesting against live code paths, pre-trade risk limits, position
+          reconciliation, deterministic replay, fail-closed operations</dd>
+      </div>
+      <div>
+        <dt>Quantitative</dt>
+        <dd>Mean reversion, market making, Bayesian optimisation, portfolio selection, Monte Carlo
+          simulation, statistical and financial modelling, machine learning</dd>
+      </div>
+      <div>
+        <dt>Engineering</dt>
+        <dd>Python, SQL, FastAPI, PostgreSQL, MySQL, async IO, time-series stores, AWS, Linux, Git,
+          scheduled jobs, monitoring and alerting</dd>
+      </div>
+      <div>
+        <dt>Market data</dt>
+        <dd>Crypto venue feeds, ETF issuer holdings disclosures, exchange and vendor APIs,
+          large-scale production analytical datasets</dd>
+      </div>
+      <div>
+        <dt>Delivery</dt>
+        <dd>Full-stack product development, stakeholder management, analytical coordination, and
+          shipping and supporting software in production</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ education ═════════════════════════════ -->
+<section class="section wrap" id="education">
+  <h2>Education</h2>
+  <div class="sectionBody">
+    <article class="entry">
+      <div class="entryHead">
+        <h3>Bachelor of Business (Honours)<span class="org">, University of Technology Sydney</span></h3>
+        <span class="when">2016 &ndash; 2019</span>
+      </div>
+      <ul>
+        <li>Weighted average mark 83.</li>
+        <li>Finance thesis: <em>Are Managers Aligning Their Pockets? Optimising Executive
+          Remuneration Systems.</em></li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+</main>
+
+<footer class="pageFoot">
+  <div class="wrap">
+    Matthew Milne &nbsp;&middot;&nbsp; Sydney, Australia &nbsp;&middot;&nbsp;
+    <a href="mailto:matt_milne@outlook.com">matt_milne@outlook.com</a>
+  </div>
+</footer>
+
+
+<script>
+/* Highlight the section currently under the nav. Progressive enhancement:
+   the links work without it. */
+(function () {
+  var nav = document.getElementById('pageNav');
+  if (!nav || !('IntersectionObserver' in window)) return;
+
+  var links = {};
+  Array.prototype.forEach.call(nav.querySelectorAll('a'), function (a) {
+    links[a.getAttribute('href').slice(1)] = a;
+  });
+
+  var seen = {};
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
+
+    var current = null;
+    Object.keys(links).forEach(function (id) { if (seen[id] && !current) current = id; });
+
+    Object.keys(links).forEach(function (id) {
+      links[id].classList.toggle('isActive', id === current);
+      if (id === current) { links[id].setAttribute('aria-current', 'true'); }
+      else { links[id].removeAttribute('aria-current'); }
+    });
+  }, { rootMargin: '-56px 0px -65% 0px', threshold: 0 });
+
+  Object.keys(links).forEach(function (id) {
+    var section = document.getElementById(id);
+    if (section) observer.observe(section);
+  });
+})();
+</script>
+
+</body>
+</html>

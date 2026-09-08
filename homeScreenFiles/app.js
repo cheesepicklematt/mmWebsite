@@ -5,7 +5,9 @@
 // An array of button names and their corresponding URLs
 var buttonsWithLinks = [
     { name: "Memory Game", url: "memoryGame/memoryGame.html", colour:"#7CE8A9" },
-    { name: "Project Euler", url: "projectEuler/projectEuler.html", colour:"#7C85E8" }
+    { name: "Project Euler", url: "projectEuler/projectEuler.html", colour:"#7C85E8" },
+    { name: "The Energy Ladder", url: "energy/energyMarket.html", colour:"#E8C87C" },
+    { name: "Résumé", url: "resume/index.html", colour:"#E87CBB" }
 ];
 
 // #E87CBB  c
