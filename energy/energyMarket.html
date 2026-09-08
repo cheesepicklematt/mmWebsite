@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The ladder &mdash; how Australia's electricity market sets a price</title>
+<link rel="icon" href="https://i.pinimg.com/736x/bb/93/7d/bb937d07baf2901499ba0c0816134756.jpg">
+<link rel="stylesheet" href="energyMarket.css">
+</head>
+<body>
+
+<header class="pageHead">
+  <div class="wrap">
+    <a class="backLink" href="../index.html">&larr; mattmilne.xyz</a>
+    <h1>The ladder</h1>
+    <p class="standfirst">
+      Every five minutes, Australia&rsquo;s National Electricity Market runs an auction and lands on
+      one number per region. That number can be &minus;$1,000 or $23,200. This page is an attempt to
+      build the intuition for why &mdash; by letting you run the auction yourself.
+    </p>
+    <dl class="tileRow" id="introTiles"></dl>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ══════════════════════════════ PART 1 ══════════════════════════════ -->
+<section id="part-ladder">
+  <p class="eyebrow">Part one</p>
+  <h2>One auction, one price</h2>
+  <div class="prose">
+    <p>
+      There is no direct selling of electricity in the NEM. It is a <strong>gross pool</strong>:
+      every generator offers into one auction, AEMO&rsquo;s dispatch engine clears it, and everyone
+      settles at the resulting regional price.
+    </p>
+    <p>
+      Each unit submits a <strong>ladder of up to ten price&ndash;volume bands</strong>: <em>&ldquo;give
+      me 280&nbsp;MW once the price reaches $12.98, another 100&nbsp;MW at $24.57&hellip;&rdquo;</em>
+      AEMO pools every band from every unit, sorts them cheapest-first, and walks up the staircase
+      until the cumulative megawatts meet demand. <strong>The band it stops on sets the price for
+      everybody.</strong> Not pay-as-bid &mdash; a single clearing price.
+    </p>
+    <p class="pullNote">
+      A bid is not a price you accept. It is a threshold: <em>dispatch me once the price gets here.</em>
+      Everything below the clearing price earns the full clearing price anyway.
+    </p>
+  </div>
+
+  <div class="controlBar" role="group" aria-label="Scenarios">
+    <span class="controlBar__label">Try a scenario</span>
+    <div class="chipRow" id="scenarioChips"></div>
+  </div>
+
+  <figure class="card cardWide">
+    <figcaption class="card__head">
+      <h3>The bid stack for one five-minute interval</h3>
+      <p class="card__sub">
+        A stylised region of twelve units, including an interconnector to the region next door.
+        Drag the demand line, or use the slider below.
+        Each block is one price band. Height is the offer price; width is the megawatts offered.
+      </p>
+    </figcaption>
+
+    <div class="ladderLayout">
+      <div class="ladderChart">
+        <div class="chartHost" id="ladderChart"></div>
+        <div class="demandSlider">
+          <label for="demandInput">Demand</label>
+          <input type="range" id="demandInput" min="2000" max="14000" step="25" value="8600">
+          <output id="demandOut">8,600 MW</output>
+        </div>
+      </div>
+
+      <aside class="ladderSide">
+        <div class="figureBlock">
+          <p class="figureBlock__label">Clearing price</p>
+          <p class="figureBlock__value" id="clearPrice">&mdash;</p>
+          <p class="figureBlock__note" id="clearNote"></p>
+        </div>
+        <dl class="miniStats" id="ladderStats"></dl>
+        <div class="availGroup">
+          <p class="availGroup__label">Availability</p>
+          <div id="availControls"></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="tableToggle">
+      <button type="button" class="linkBtn" data-table="ladderTable">Show the dispatch table</button>
+    </div>
+    <div class="tableHost" id="ladderTable" hidden></div>
+  </figure>
+
+  <div class="prose">
+    <h3>Three things the staircase makes obvious</h3>
+    <ol class="numList">
+      <li>
+        <strong>Almost nobody is paid what they bid.</strong> The solar farm offering at
+        &minus;$55 collects the same $/MWh as the gas turbine that set the price. The gap between
+        offer and clearing price is where a generator&rsquo;s margin lives &mdash; and it is why
+        offering low is not the same as earning low.
+      </li>
+      <li>
+        <strong>Price is a step function, not a curve.</strong> Nudge demand across a step edge and
+        the price can multiply. Push it past the last cheap block and there is nothing between you and
+        a $14,500 band. Ten per cent more demand can mean ten times the price.
+      </li>
+      <li>
+        <strong>Bidding below zero is rational.</strong> A coal unit that shuts down has to pay to
+        restart, and a unit that has sold a hedge still owes on it whether or not it generates. Both
+        make it worth paying, briefly, to stay dispatched. That is what the &minus;$983 band is.
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ PART 2 ══════════════════════════════ -->
+<section id="part-day">
+  <p class="eyebrow">Part two</p>
+  <h2>A day, five minutes at a time</h2>
+  <div class="prose">
+    <p>
+      The ladder above is one interval. A day is 288 of them. Demand rises and falls, the sun comes
+      up and goes down, and the same auction re-runs every five minutes against a stack whose cheap
+      end keeps changing size. Press play and watch the price fall out of the mechanism.
+    </p>
+  </div>
+
+  <figure class="card cardWide">
+    <figcaption class="card__head">
+      <h3>The same market, run 288 times</h3>
+      <p class="card__sub">
+        Top: what the auction is fed &mdash; demand, and how much capacity is offered cheaply enough
+        to meet it. Bottom: the price that falls out. Then switch on battery charging: storage buys
+        whenever the price drops under $15, and watch the midday floor lift off the negative bands.
+      </p>
+    </figcaption>
+    <div class="playBar">
+      <button type="button" class="playBtn" id="playBtn" aria-label="Play the day">Play the day</button>
+      <input type="range" id="timeInput" min="0" max="287" step="1" value="156">
+      <output id="timeOut">11:00</output>
+      <label class="switch"><input type="checkbox" id="batteryToggle"><span>Battery charging</span></label>
+    </div>
+    <div class="chartHost" id="dayInputChart"></div>
+    <div class="chartHost" id="dayPriceChart"></div>
+    <p class="card__foot" id="dayReadout"></p>
+  </figure>
+
+  <div class="prose">
+    <p>
+      That midday collapse and evening spike is the <strong>duck curve</strong>, and it is not a
+      quirk of the weather &mdash; it is arithmetic. Solar adds several thousand megawatts to the
+      bottom of the stack for six hours, pushing the clearing point down into the negative bands.
+      At sunset it withdraws over about ninety minutes, exactly as demand peaks, and the clearing
+      point walks up into gas.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════ PART 3 ══════════════════════════════ -->
+<section id="part-real">
+  <p class="eyebrow">Part three</p>
+  <h2>What actually happened</h2>
+  <div class="prose">
+    <p id="realIntro">
+      Everything below is real dispatch data pulled from AEMO&rsquo;s public NEMWeb archive &mdash;
+      every five-minute regional reference price, unsmoothed and unclipped.
+    </p>
+  </div>
+
+  <div class="controlBar" role="group" aria-label="Regions">
+    <span class="controlBar__label">Regions</span>
+    <div class="chipRow" id="regionChips"></div>
+  </div>
+
+  <figure class="card">
+    <figcaption class="card__head">
+      <h3>Daily price, by region</h3>
+      <p class="card__sub">
+        Line is the median of the day&rsquo;s 288 intervals &mdash; a typical price. Select a single
+        region to also see the day&rsquo;s full min&ndash;max range as a band. The vertical axis fits
+        itself to what is on screen: linear while everything stays in the normal range, and
+        logarithmic above $300 once a spike is in view, so the spike shows without flattening the rest.
+      </p>
+    </figcaption>
+    <div class="chartHost" id="dailyChart"></div>
+    <div class="tableToggle"><button type="button" class="linkBtn" data-table="dailyTable">Show the data table</button></div>
+    <div class="tableHost" id="dailyTable" hidden></div>
+  </figure>
+
+  <figure class="card">
+    <figcaption class="card__head">
+      <h3>The duck curve</h3>
+      <p class="card__sub">
+        Price by hour of the market day, across every day in the window. This is the
+        single most legible chart in energy: the midday hole is rooftop and utility solar, the
+        evening horn is the stack climbing into gas as the sun sets. The median shows the shape;
+        the mean shows where the money is, and in South Australia they are barely the same chart.
+      </p>
+    </figcaption>
+    <div class="chipRow chipRow--inset" id="duckStat"></div>
+    <div class="chartHost" id="duckChart"></div>
+    <div class="tableToggle"><button type="button" class="linkBtn" data-table="duckTable">Show the data table</button></div>
+    <div class="tableHost" id="duckTable" hidden></div>
+  </figure>
+
+  <figure class="card">
+    <figcaption class="card__head">
+      <h3>Where the money is: the price duration curve</h3>
+      <p class="card__sub">
+        Every five-minute price sorted from highest to lowest, plotted against the share of time
+        spent at or above it. Note the horizontal axis is logarithmic &mdash; the leftmost tenth of
+        an inch is a handful of intervals a year.
+      </p>
+    </figcaption>
+    <div class="chartHost" id="pdcChart"></div>
+    <p class="tileCaption">Share of a flat generator&rsquo;s annual revenue earned in its top 1% of intervals</p>
+    <dl class="tileRow tileRow--tight" id="pdcTiles"></dl>
+    <div class="tableToggle"><button type="button" class="linkBtn" data-table="pdcTable">Show the data table</button></div>
+    <div class="tableHost" id="pdcTable" hidden></div>
+  </figure>
+
+  <figure class="card">
+    <figcaption class="card__head">
+      <h3>Three real days, five minutes at a time</h3>
+      <p class="card__sub">
+        The shape the aggregates hide. A spike is over in twenty minutes; a negative stretch can run
+        for eight hours.
+      </p>
+    </figcaption>
+    <div class="chipRow chipRow--inset" id="dayChips"></div>
+    <div class="chartHost" id="realDayChart"></div>
+    <p class="card__foot" id="realDayNote"></p>
+    <div class="tableToggle"><button type="button" class="linkBtn" data-table="realDayTable">Show the data table</button></div>
+    <div class="tableHost" id="realDayTable" hidden></div>
+  </figure>
+</section>
+
+<!-- ══════════════════════════════ PART 4 ══════════════════════════════ -->
+<section id="part-bids">
+  <p class="eyebrow">Part four</p>
+  <h2>Reading a real bid</h2>
+  <div class="prose">
+    <p>
+      Below is a genuine ladder: Eraring Unit&nbsp;1 (<code>ER01</code>), a black coal unit in New
+      South Wales, as offered for 7&nbsp;September 2026. Ten bands, 750&nbsp;MW, one day.
+    </p>
+  </div>
+
+  <figure class="card">
+    <figcaption class="card__head">
+      <h3>ER01 &mdash; ten bands, one unit</h3>
+      <p class="card__sub">At the NSW price that week ($65.50), bands one to five clear: 700&nbsp;MW dispatched, all of it paid $65.50.</p>
+    </figcaption>
+    <div class="chartHost" id="erChart"></div>
+    <div class="annoGrid">
+      <div class="anno">
+        <p class="anno__key">Band 1 &mdash; &minus;$983.10, 182&nbsp;MW</p>
+        <p>Near the market floor. A synchronised coal unit that shuts down pays to restart, and a
+        unit that has sold a hedge owes on it whether it generates or not. Bidding here makes
+        dispatch essentially certain and costs nothing &mdash; it still collects the clearing price.</p>
+      </div>
+      <div class="anno">
+        <p class="anno__key">Bands 2&ndash;5 &mdash; $12.98 to $56.42</p>
+        <p>The real operating ladder, walking up through fuel and wear cost. This is the part that
+        behaves the way a textbook says a supply curve should.</p>
+      </div>
+      <div class="anno">
+        <p class="anno__key">Band 10 &mdash; $22,759.75, 50&nbsp;MW</p>
+        <p>Never expected to clear. It is the market price cap divided by the unit&rsquo;s marginal
+        loss factor &mdash; a legal ceiling bid that captures the extreme upside if a summer evening
+        ever gets there. Every unit has one.</p>
+      </div>
+    </div>
+  </figure>
+
+  <div class="prose">
+    <h3>Prices are a commitment; volumes are a response</h3>
+    <p>
+      The asymmetry that makes the whole thing work: <strong>price bands are locked in at 12:30pm the
+      day before and cannot change during the trading day. Volume bands can be rebid until about five
+      minutes before dispatch.</strong> Across 573 ladders on a recent day, exactly zero changed a
+      price band. Batteries rebid volumes 288 times &mdash; every interval. The median thermal unit
+      submitted once and left it.
+    </p>
+    <p>
+      And the dispatch engine is deliberately <strong>fuel-blind</strong>. A band is a price and a
+      number of megawatts; nothing tells the engine whether it is coal, wind or a battery. What the
+      bid <em>does</em> carry is physics &mdash; ramp rates, minimum load, energy limits. Fuel type
+      lives in a separate registration table, and the merit order sorts itself out.
+    </p>
+    <p>
+      The last piece is that most participants are hedged. A generator and a retailer who sign a
+      $80/MWh swap both end up at $80 regardless of what the pool does &mdash; the contract settles
+      in cash and the electricity never notices. AEMO has no idea the contract exists. But the
+      contract changes how you bid: fully contracted, you <em>must</em> generate, so you bid the
+      floor. Uncontracted, you would rather keep the spike, so you withhold into high bands. The
+      derivatives market has zero mechanical effect on dispatch and is the single largest influence
+      on it.
+    </p>
+  </div>
+</section>
+
+<footer class="pageFoot">
+  <div class="wrap">
+    <p><strong>Source:</strong> AEMO NEMWeb dispatch data (<code>DISPATCHPRICE</code>,
+      <code>INTERVENTION=0</code>). AEMO does not endorse this analysis.</p>
+    <p id="footMeta"></p>
+    <p class="footNote">
+      The market simulator in parts one and two is a stylised ten-unit region, not a model of any
+      real region. Its bid ladders are shaped after published ones and its price cap, floor and
+      mechanics are the real ones. Part three and the Eraring ladder in part four are real data.
+      Timestamps are market time (UTC+10, no daylight saving) and each interval is stamped by its
+      end, so a price at 00:05 covers 00:00&ndash;00:05.
+    </p>
+  </div>
+</footer>
+
+</main>
+
+<script src="web/nem_data.js"></script>
+<script src="energyMarket.js"></script>
+</body>
+</html>

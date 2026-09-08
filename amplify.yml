@@ -1,0 +1,18 @@
+# Static site — no build step, no dependencies. The build phase only strips
+# files that are inputs to the visualisation rather than part of the site:
+# the cached AEMO extracts (~9 MB of JSONL) and the Python that produced them.
+# Amplify builds from a copy of the repo, so this never touches the checkout.
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - rm -rf energy/raw
+        - rm -f energy/*.py energy/ENERGY_MARKET_NOTES.md
+        - find . -name '.DS_Store' -delete
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+  cache:
+    paths: []
